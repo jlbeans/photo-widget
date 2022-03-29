@@ -1,6 +1,20 @@
-<%= form_with (url: "/", method: :get, local:true) do |f|%>
-<div class= "field">
-  <%= f.text_field :user_id, label: "Enter your user id"%>
-  <%= f.submit 'See photos'%>
-</div>
-<% end %>
+
+  <div class= "column">
+    <%= render "form" %>
+  </div>
+
+  <% if params[:user_id].present? %>
+    <div class="has-text-centered"> Here are photos uploaded by <%= params[:user_id] %>:
+    </div>
+  <% else %>
+    <div class="has-text-centered"> Here are some recently uploaded photos:
+    </div>
+  <% end %>
+
+  <div class= "container">
+    <% @photos.each do |p| %>
+      <div class="column">
+        <img src= "<%= Flickr.url_n(p)%>"/>
+      </div>
+    <% end %>
+  </div>
